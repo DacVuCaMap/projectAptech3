@@ -91,12 +91,14 @@ const Test = () => {
     {
       field: 'email',
       headerName: "Email",
-      width: 200
+      width: 200,
+      type:"email"
     },
     {
       field: 'phone',
       headerName: "Phone Number",
-      width: 150
+      width: 150,
+      type:"number"
     },
     {
       field: "birthday",

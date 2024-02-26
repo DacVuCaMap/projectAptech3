@@ -1,7 +1,8 @@
 import Home from "./pages/home/Home";
 import Users from "./pages/users/Users";
 import Categories from "./pages/categories/Categories";
-import Test from "./pages/test/test";
+import Test from "./pages/test/Test";
+import Profile from "./pages/profile/Profile";
 import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
@@ -56,6 +57,10 @@ function App() {
       {
         path:"/test",
         element:<Test />
+      },
+      {
+        path:"profile",
+        element:<Profile/>
       }
     ]
    },

@@ -1,0 +1,41 @@
+.profileIntro {
+    display: flex;
+    flex-direction: column;
+}
+
+.headerprofile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.headerprofile img {
+    width: 100px; 
+    height: 100px;
+    margin-right: 10px; /* Điều chỉnh khoảng cách giữa hình ảnh và tiêu đề */
+}
+.headerprofile button{
+    background-color: #EF4040;
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    color: white;
+}
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 80px;
+    font-size: 25px;
+}
+
+.profile-info span {
+    display: flex;
+    align-items: center;
+    padding-left: 100px;
+}
+
+.profile-info span p {
+    margin: 0; /* Xóa margin mặc định của thẻ p */
+    width: 200px; /* Điều chỉnh độ rộng của thẻ p */
+}
