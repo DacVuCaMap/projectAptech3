@@ -11,10 +11,14 @@
         border: 1px solid $soft-bg;
         
     }
+    .box1{
+        grid-column: span 1;
+        grid-row: span 2;
+    }
 }
 .main .introductadmin {
     text-align: center; 
-    margin: 20px 0; 
+    margin: 0; 
 }
 
 .main .introductadmin p {

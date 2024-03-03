@@ -5,6 +5,7 @@ import { userRows } from '../../data';
 import { useEffect, useState } from 'react';
 import Add from '../../components/add/Add';
 import axios from 'axios';
+import UserRow from '../../data/UserRow';
 const Users = () => {
 
   console.log("hello")
@@ -12,15 +13,6 @@ const Users = () => {
   // su dung axios
 
   const [test,setTest] = useState([]);
-  useEffect(()=>{
-    axios.get('http://103.163.215.105:8199/Users/GetAllUser')
-    .then(res=>{
-      console.log(res.data);
-      setTest(res.data);
-    }).catch(error=>{
-      console.error('Error'+error);
-    });
-  },[]);
   
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 50 },
@@ -65,6 +57,62 @@ const Users = () => {
 
 
   ];
+
+
+  const addView: GridColDef[] = [
+    { field: 'id', headerName: 'ID', width: 50 },
+    {
+      field:"img", headerName:"Avatar", width: 75,
+      renderCell: (params)=> {
+        return <img src={params.row.img || "./noavatar.png"} alt="Avatar"/>
+      }
+    },
+    {
+      field: 'UserName',
+      headerName: 'User Name'
+    },
+    {
+      field: 'FullName',
+      headerName: 'Full Name',
+      sortable: false,
+      width: 140,
+    },
+    {
+      field: 'Sex',
+      headerName: "Gender",
+      width: 80
+    },
+    {
+      field: 'Email',
+      headerName: "Email",
+      width: 200,
+      type:"email"
+    },
+    {
+      field: 'PhoneNumber',
+      headerName: "Phone Number",
+      width: 150,
+      type:"number"
+    },
+    {
+      field: "Birthday",
+      headerName: "Birth Day",
+      width: 200,
+      type:"date"
+    },
+    {
+      field: "Address",
+      headerName: "Address",
+      width: 200,
+    },
+    {
+      field: "Avatar",
+      headerName: "Image",
+      width: 200,
+      type:'file'
+    }
+  ];
+  console.log("user row:",UserRow);
   const [open, setOpen] = useState(false);
   
   return (
@@ -73,8 +121,8 @@ const Users = () => {
         <h1>Users</h1>
         <button onClick={()=>setOpen(true)}>Add New Users</button>
       </div>
-      <DataTable slug="users" columns={columns} rows={userRows}/>
-      {open && <Add slug='user' columns={columns} setOpen={setOpen}/>}
+      <DataTable slug="users" columns={columns} rows={UserRow}/>
+      {open && <Add slug='user' columns={addView} setOpen={setOpen}/>}
     </div>
   )
 }

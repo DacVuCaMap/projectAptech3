@@ -61,7 +61,7 @@
     margin-bottom: 25px;
     border: 1px solid #ddd;
     border-radius: 3px;
-    outline: none;
+    outline:none;
 }
 .input-box input[type="password"]{
     margin-bottom: 10px;
@@ -151,4 +151,13 @@ hr{
         padding: 10px 25px;
         margin: 15px;
     }
+}
+.error-message{
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: red;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.error-input{
+    outline: 1px red solid ;
 }

@@ -2,8 +2,6 @@ import { GridColDef } from "@mui/x-data-grid";
 import "./add.scss";
 import React, { useState } from "react";
 import axios, { AxiosError } from "axios";
-import { Avatar } from "@mui/material";
-import User from "../../model/User";
 
 type Props = {
   slug: string;
@@ -11,33 +9,62 @@ type Props = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const Add = (props: Props) => {
-  const token = localStorage.getItem('token');
-  const [fileData, setFileData] = useState<File>();
+const Edit = (props: Props) => {
 
-  const [userData, setUserData] = useState<User>({});
+  const [UserName, setUserName] = useState({});
+  const [FullName, setFullName] = useState({});
+  const [Sex, setSex] = useState({});
+  const [Email, setEmail] = useState({});
+  const [PhoneNumber, setPhoneNumber] = useState({});
+  const [Birthday, setBirthday] = useState({});
+  const [Avatar, setAvatar] = useState({});
+  const [Address, setAddress] = useState({});
 
-  const uploadFile = async (file: File) => {
+
+
+  const [userData, setUserData] = useState<any>({
+    UserID:'0',
+    UserName: '',
+    FullName: '',
+    Sex: '',
+    Email: '',
+    PhoneNumber: '',
+    Birthday: '',
+    Avatar: '',
+    ProvinceID:'0',
+    WardID:'0',
+    DistrictID:'0',
+    Address: '',
+  });
+
+  const uploadFile = async(file:File)=>{
+    console.log(file);
     const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await axios.post('http://103.163.215.105:8199/api/File/UploadFile', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}` // Set the Authorization header with the token
+    formData.append('file',file);
+    console.log(formData)
+    try{
+      const res = await axios.post('http://103.163.215.105:8199/api/File/UploadFile',formData,{
+        headers:{
+          'Content-Type': 'multipart/form-data'
         }
       });
       console.log('File uploaded successfully:', res.data);
-      return res.data; // Return the response data containing the link
-    } catch (error) {
-      throw error;
+    }
+    catch (error) {
+      if (axios.isAxiosError(error)) {
+        // Đảm bảo rằng biến 'error' là một đối tượng AxiosError
+        const axiosError = error as AxiosError;
+        // In ra thông báo lỗi từ phản hồi
+        console.error('Error uploading image:', axiosError.response?.data);
+      } else {
+        // Xử lý trường hợp không phải là lỗi Axios
+        console.error('Unknown error:', error);
+      }
     }
   }
 
-
-  const handleChange = (name: any, target: any) => {
-    let value: any = target.value;
+  const handleChange = (name : any, target : any) => {
+    let value:any = target.value;
     if (name === 'Sex') {
       switch (value) {
         case 'male':
@@ -53,31 +80,32 @@ const Add = (props: Props) => {
     }
     console.log(name)
     //handle img
-    if (name === 'Avatar') {
+    if (name ==='Avatar') {
       //upload file to server
-      setFileData(target.files[0]);
-    }else{
-      setUserData({
-        ...userData,
-        [name]: value,
-      });
+      uploadFile(target.files[0]);
+      
     }
-    
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
 
   }
 
-
+  
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
+    console.log(userData);
     e.preventDefault();
-
-    // Check if fileData is defined
-    if (!fileData) {
-      console.error('File data is undefined.');
-      return; // Exit the function early if fileData is undefined
+    try {
+      const response = await axios.post('http://103.163.215.105:8199/Users/UpdateUser', userData);
+      console.log('Data sent successfully:', response.data);
+      // Xử lý kết quả phản hồi tại đây nếu cần
+    } catch (error) {
+      console.error('Error sending data:', error);
+      // Xử lý lỗi tại đây nếu cần
     }
-    
 
     //fetch
   }
@@ -107,6 +135,7 @@ const Add = (props: Props) => {
                     type={column.type}
                     placeholder={column.field}
                     required
+                    value={userData[column.field]}
                     onChange={(e) => handleChange(column.field, e.target)}
                     multiple={false}
                     accept=".jpg, .jpeg, .png"
@@ -122,4 +151,4 @@ const Add = (props: Props) => {
   )
 }
 
-export default Add
+export default Edit
