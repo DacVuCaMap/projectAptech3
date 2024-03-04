@@ -21,6 +21,7 @@ const Add = (props: Props) => {
 
 
   const handleChange = async (name: any, target: any) => {
+    
     let value: any = target.value;
     if (name === 'Sex') {
       switch (target) {
@@ -51,7 +52,7 @@ const Add = (props: Props) => {
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
+    e.preventDefault();
     console.log(userData, ' file : ', fileData);
     if (!fileData) {
       // Thoát khỏi hàm nếu file là undefined
@@ -67,7 +68,7 @@ const Add = (props: Props) => {
       console.log(mess)
       return;
     }
-    
+    window.location.reload();
 
     //fetch
   }

@@ -22,16 +22,11 @@ const Login = () => {
             localStorage.setItem('token',response.data.Object['Token']);
             console.log("vao day");
             navigate('/');
-
-
-
-
         } catch (error) {
             console.error('Error', error);
             setErrorMessage("Login failed. Please check your username and password.")
             setPassword('');
         }
-
     }
 
     return (

@@ -1,7 +1,7 @@
 import DataTable from '../../components/dataTable/DataTable'
 import { useState } from 'react'
 import './categories.scss'
-import Add from '../../components/add/Add'
+import Add from '../../components/add/AddUser'
 import {userCategories} from "../../data"
 import { GridColDef } from '@mui/x-data-grid'
 const Categories = () => {

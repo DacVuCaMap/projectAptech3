@@ -2,7 +2,7 @@ import { DataGrid, GridColDef, GridToolbar, GridValueGetterParams } from "@mui/x
 import "./dataTable.scss"
 import { Link } from "react-router-dom"
 import { useState } from "react";
-import Add from "../add/Add";
+import Add from "../add/AddUser";
 import { addUserColumn } from "../../columndata/columnData";
 import UserService from "../../services/UserService";
 type Props = {

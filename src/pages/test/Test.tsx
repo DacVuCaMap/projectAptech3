@@ -3,7 +3,7 @@ import DataTable from '../../components/dataTable/DataTable'
 import {GridColDef} from "@mui/x-data-grid";
 import { userRows } from '../../data';
 import { useEffect, useState } from 'react';
-import Add from '../../components/add/Add';
+import Add from '../../components/add/AddUser';
 import axios from 'axios';
 import UserRow from '../../columndata/UserRow';
 const Test = () => {
