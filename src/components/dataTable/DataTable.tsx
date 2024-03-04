@@ -1,35 +1,45 @@
-import {  DataGrid, GridColDef, GridToolbar, GridValueGetterParams } from "@mui/x-data-grid"
+import { DataGrid, GridColDef, GridToolbar, GridValueGetterParams } from "@mui/x-data-grid"
 import "./dataTable.scss"
 import { Link } from "react-router-dom"
+import { useState } from "react";
+import Add from "../add/Add";
+import { addUserColumn } from "../../data/columnData";
+import UserService from "../../services/UserService";
 type Props = {
   columns: GridColDef[],
-  rows:object[],
+  rows: object[],
   slug: string;
 }
 
 
 
-function DataTable(props: Props) {
+function DataTable(props: Props & { setOpenEdit: React.Dispatch<React.SetStateAction<boolean>>, setUserId: React.Dispatch<React.SetStateAction<string>> }) {
+  const userService = new UserService('http://103.163.215.105:8199');
 
-  // const queryClient = useQueryClient();
-
-   
-  const handleDelete = (id: number) => {
+  const handleDelete = async (id: string) => {
     //delete the item
-    // mutation.mutate(id)
+    await userService.deleteUserById(id);
+    window.location.reload();
   };
+  const handleEdit = (id:string)=>{
+    props.setOpenEdit(true); 
+    props.setUserId(id);
+  }
 
-  
-  const actionColumn:GridColDef = {
-    field:"action",
-    headerName:"Action",
-    renderCell:(params)=>{
+  const actionColumn: GridColDef = {
+    field: "action",
+    headerName: "Action",
+    renderCell: (params) => {
       return (
         <div className="action">
-          <Link to={`/${props.slug}/${params.row.id}`}>
+          
+          {/* <Link to={`/${props.slug}/${params.row.id}`}>
+            
+          </Link> */}
+          <div className="edit" onClick={() => handleEdit(params.row.userId)}>
             <img src="/view.svg" alt="" />
-          </Link>
-          <div className="delete" onClick={() => handleDelete(params.row.id)}>
+          </div>
+          <div className="delete" onClick={() => handleDelete(params.row.userId)}>
             <img src="/delete.svg" alt="" />
           </div>
         </div>
@@ -39,32 +49,34 @@ function DataTable(props: Props) {
 
   return (
     <div className="dataTable">
-        <DataGrid 
-            className="dataGrid"
-            rows={props.rows}
-            columns={[...props.columns, actionColumn]}
-            initialState={{
-                pagination: {
-                    paginationModel: {
-                        pageSize: 5,
-                    },
-                },
-            }}
-            slotProps={{
-                toolbar: {
-                    showQuickFilter: true,
-                    quickFilterProps: { debounceMs: 500 },
-                }
-            }}
-            slots={{toolbar: GridToolbar}}
-            pageSizeOptions={[5]}
-            checkboxSelection
-            disableRowSelectionOnClick
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            disableEval
-        />
+      <DataGrid
+        className="dataGrid"
+        rows={props.rows}
+        columns={[...props.columns, actionColumn]}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        slotProps={{
+          toolbar: {
+            showQuickFilter: true,
+            quickFilterProps: { debounceMs: 500 },
+          }
+        }}
+        slots={{ toolbar: GridToolbar }}
+        pageSizeOptions={[5]}
+        disableRowSelectionOnClick
+        disableColumnFilter
+        disableColumnSelector
+        disableDensitySelector
+        disableEval
+        columnVisibilityModel={{
+          userId: false,
+        }}
+      />
     </div>
   )
 }

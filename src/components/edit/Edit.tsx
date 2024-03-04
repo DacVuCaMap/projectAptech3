@@ -1,72 +1,41 @@
 import { GridColDef } from "@mui/x-data-grid";
-import "./add.scss";
-import React, { useState } from "react";
+import "./edit.scss";
+import React, { useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
+import UserService from "../../services/UserService";
 
 type Props = {
   slug: string;
   columns: GridColDef[]
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  userId: any;
 }
 
-const Edit = (props: Props) => {
-
-  const [UserName, setUserName] = useState({});
-  const [FullName, setFullName] = useState({});
-  const [Sex, setSex] = useState({});
-  const [Email, setEmail] = useState({});
-  const [PhoneNumber, setPhoneNumber] = useState({});
-  const [Birthday, setBirthday] = useState({});
-  const [Avatar, setAvatar] = useState({});
-  const [Address, setAddress] = useState({});
+const Edit = (prop: Props) => {
+  const [user, setUser] = useState<any>({});
+  const userService = new UserService('http://103.163.215.105:8199');
 
 
+  // phai sua lai
+  useEffect(() => {
+    const fetchData = async () => {
+      const userData = await userService.getUserById(prop.userId);
+      setUser(userData);
+    };
 
-  const [userData, setUserData] = useState<any>({
-    UserID:'0',
-    UserName: '',
-    FullName: '',
-    Sex: '',
-    Email: '',
-    PhoneNumber: '',
-    Birthday: '',
-    Avatar: '',
-    ProvinceID:'0',
-    WardID:'0',
-    DistrictID:'0',
-    Address: '',
-  });
+    fetchData();
+  }, [prop.userId]);
+  console.log(user)
+  //tach date
+  const strDate: string = user.Birthday ? user.Birthday.split('T')[0] : '';
 
-  const uploadFile = async(file:File)=>{
-    console.log(file);
-    const formData = new FormData();
-    formData.append('file',file);
-    console.log(formData)
-    try{
-      const res = await axios.post('http://103.163.215.105:8199/api/File/UploadFile',formData,{
-        headers:{
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      console.log('File uploaded successfully:', res.data);
-    }
-    catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Đảm bảo rằng biến 'error' là một đối tượng AxiosError
-        const axiosError = error as AxiosError;
-        // In ra thông báo lỗi từ phản hồi
-        console.error('Error uploading image:', axiosError.response?.data);
-      } else {
-        // Xử lý trường hợp không phải là lỗi Axios
-        console.error('Unknown error:', error);
-      }
-    }
-  }
 
-  const handleChange = (name : any, target : any) => {
-    let value:any = target.value;
+
+  //handle chagne
+  const handleChange = async (name: any, target: any) => {
+    let value: any = target.value;
     if (name === 'Sex') {
-      switch (value) {
+      switch (target) {
         case 'male':
           value = 1;
           break;
@@ -80,65 +49,57 @@ const Edit = (props: Props) => {
     }
     console.log(name)
     //handle img
-    if (name ==='Avatar') {
-      //upload file to server
-      uploadFile(target.files[0]);
-      
-    }
-    setUserData({
-      ...userData,
-      [name]: value,
+    setUser({
+      ...user,
+      [name]: value
     });
-
   }
 
-  
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
-    console.log(userData);
+    console.log(user)
     e.preventDefault();
-    try {
-      const response = await axios.post('http://103.163.215.105:8199/Users/UpdateUser', userData);
-      console.log('Data sent successfully:', response.data);
-      // Xử lý kết quả phản hồi tại đây nếu cần
-    } catch (error) {
-      console.error('Error sending data:', error);
-      // Xử lý lỗi tại đây nếu cần
-    }
+    await userService.getUpdateUser(user);
+    
 
-    //fetch
   }
 
   return (
     <div className="add">
       <div className="modal">
-        <span className="close" onClick={() => props.setOpen(false)}>X</span>
-        <h1>Add new {props.slug}</h1>
+        <span className="close" onClick={() => prop.setOpen(false)}>X</span>
+        <h1>Edit {prop.slug}</h1>
         <form onSubmit={handleSubmit}>
-
-          {props.columns
+          {prop.columns
             .filter(i => i.field !== "id" && i.field !== "img")
             .map((column) => (
-              <div className="item">
+              <div className="item" key={column.field}>
                 <label>{column.headerName}</label>
-
                 {column.field === 'Sex' ? (
-                  <select defaultValue='0' onChange={(e) => handleChange(column.field, e.target.value)} className="drop-down" required>
+                  <select defaultValue={user.Sex} className="drop-down" required>
                     <option value="0" disabled> --Select gender--</option>
                     <option value="1">Male</option>
                     <option value="2">Female</option>
                     <option value="3">Other</option>
                   </select>
-                ) : (
+                ) : column.field === 'Avatar' ? (
+                  <img src={user[column.field]} alt="Avatar" style={{ height: '150px' }} /> // Không hiển thị input
+                ) : column.field === 'Birthday' ? (
                   <input
+                    value={strDate}
                     type={column.type}
                     placeholder={column.field}
                     required
-                    value={userData[column.field]}
-                    onChange={(e) => handleChange(column.field, e.target)}
+                  />
+                ) : (
+                  <input
+                    value={user[column.field]}
+                    type={column.type}
+                    placeholder={column.field}
+                    required
                     multiple={false}
+                    onChange={(e) => handleChange(column.field, e.target)}
                     accept=".jpg, .jpeg, .png"
+                    disabled={column.field === 'UserName' || column.field === 'Email'}
                   />
                 )}
               </div>

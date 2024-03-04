@@ -1,6 +1,6 @@
 @import "../../styles//variable.scss";
 
-.add{
+.add {
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -10,57 +10,66 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    .drop-down{
+
+    .drop-down {
         background: none;
         height: 35px;
         width: 200px;
         color: white;
     }
-    option{
+
+    option {
         color: black;
     }
-    .modal{
+
+    .modal {
         padding: 50px;
         border-radius: 10px;
         background-color: $main-bg;
         position: relative;
     }
-    h1{
+
+    h1 {
         margin-bottom: 40px;
         font-size: 24px;
         color: $soft-color;
     }
-    .close{
+
+    .close {
         position: absolute;
         top: 10px;
         right: 10px;
         cursor: pointer;
     }
-    form{
+
+    form {
         display: flex;
         flex-wrap: wrap;
         max-width: 500px;
         justify-content: space-between;
 
-        .item{
+        .item {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-bottom: 20px;
-            label{
+
+            label {
                 font-size: 14px;
             }
-            input{
+
+            input {
                 padding: 10px;
                 background-color: transparent;
                 color: white;
                 outline: none;
                 border: 1px solid $soft-color;
                 border-radius: 3px;
+                box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
             }
         }
 
-        button{
+        button {
             width: 100%;
             padding: 10px;
             cursor: pointer;
@@ -69,4 +78,10 @@
             font-size: 15px;
         }
     }
+}
+
+.error-input {
+    border-color: red !important;
+    border-width: 2px;
+    box-shadow: 0 0 30px red !important;
 }

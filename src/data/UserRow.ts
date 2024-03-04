@@ -11,6 +11,7 @@ let count=0;
 const UserRow: any[] = userList.map((user: User) => {
     count++;
     return {
+        userId:user.UserID,
         id: count,
         img: user.Avatar,
         fullname: user.FullName,
