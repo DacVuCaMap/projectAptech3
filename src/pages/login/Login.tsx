@@ -21,7 +21,7 @@ const Login = () => {
             //add clien token
             localStorage.setItem('token',response.data.Object['Token']);
             console.log("vao day");
-            // navigate('/');
+            navigate('/');
 
 
 

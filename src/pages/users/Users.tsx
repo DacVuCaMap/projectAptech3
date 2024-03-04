@@ -2,8 +2,8 @@ import './users.scss'
 import DataTable from '../../components/dataTable/DataTable'
 import { useEffect, useState } from 'react';
 import Add from '../../components/add/Add';
-import UserRow from '../../data/UserRow';
-import { addUserColumn, columnsUser } from '../../data/columnData';
+import UserRow from '../../columndata/UserRow';
+import { addUserColumn, columnsUser } from '../../columndata/columnData';
 import Edit from '../../components/edit/Edit';
 const Users = () => {
 

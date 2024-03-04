@@ -5,7 +5,7 @@ import { userRows } from '../../data';
 import { useEffect, useState } from 'react';
 import Add from '../../components/add/Add';
 import axios from 'axios';
-import UserRow from '../../data/UserRow';
+import UserRow from '../../columndata/UserRow';
 const Test = () => {
 
   console.log("hello")

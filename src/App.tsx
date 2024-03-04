@@ -51,10 +51,6 @@ function App() {
         element:<Categories />
       },
       {
-        path:"/users",
-        element:<Users />
-      },
-      {
         path:"/test",
         element:<Test />
       },
@@ -63,11 +59,12 @@ function App() {
         element:<Profile/>
       }
     ]
+    
    },
    {
-    path:"/login",
+    path:"login",
     element:<Login />
-   }
+  }
   ]);
   return (
     <RouterProvider router={router} />

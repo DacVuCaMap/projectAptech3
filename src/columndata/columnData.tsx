@@ -1,7 +1,6 @@
 import { DataGrid, GridColDef, GridToolbar, GridValueGetterParams } from "@mui/x-data-grid"
 
 
-
 export const columnsUser: GridColDef[] = [
   {
     field:'userId'

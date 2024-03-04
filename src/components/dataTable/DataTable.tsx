@@ -3,7 +3,7 @@ import "./dataTable.scss"
 import { Link } from "react-router-dom"
 import { useState } from "react";
 import Add from "../add/Add";
-import { addUserColumn } from "../../data/columnData";
+import { addUserColumn } from "../../columndata/columnData";
 import UserService from "../../services/UserService";
 type Props = {
   columns: GridColDef[],

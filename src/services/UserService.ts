@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import User from "../model/User";
 
-
 class UserService {
     private baseUrl: string;
     constructor(baseUrl: string) {

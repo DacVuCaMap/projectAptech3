@@ -1,4 +1,3 @@
-import UserService from './services/UserService';
 
 export const menu = [
   {
@@ -108,22 +107,6 @@ description: "Hello"
 export const userRows = [
 {
   id: 1,
-  img: "https://images.pexels.com/photos/8405873/pexels-photo-8405873.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-  fullname: "Nguyen Van A",
-  gender: "Male",
-  email: "kewez@@gmail.com",
-  phone: "123 456 789",
-  address: "Ha Noi",
-  birthday: "18/05/2003",
-  createdAt: "01.02.2023",
-},
-]
-
-
-/// chua xong
-export const userRows2 = [
-{
-  Nbr: 1,
   img: "https://images.pexels.com/photos/8405873/pexels-photo-8405873.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
   fullname: "Nguyen Van A",
   gender: "Male",
